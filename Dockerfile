@@ -58,6 +58,7 @@ RUN cat cron | crontab -
 #permissions apache
 RUN rm -f index.html \
     && chown -R www-data. ./
+RUN chmod -R 777 /var/www/html
 
 #enable module apache
 
