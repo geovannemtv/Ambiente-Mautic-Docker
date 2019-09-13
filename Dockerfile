@@ -2,6 +2,13 @@ FROM debian:9
 
 WORKDIR /var/www/html
 
+# Manually set up the apache environment variables
+ENV APACHE_RUN_USER www-data
+ENV APACHE_RUN_GROUP www-data
+ENV APACHE_LOG_DIR /var/log/apache2
+ENV APACHE_LOCK_DIR /var/lock/apache2
+ENV APACHE_PID_FILE /var/run/apache2.pid
+
 # install pre-requisites
 RUN apt-get update > /dev/null \
     && apt-get install --assume-yes \
@@ -37,7 +44,7 @@ RUN apt install --assume-yes \
         php7.0-curl \
         php7.0-apcu \
         php7.0-pdo-mysql \
-        > /dev/null
+        php7.0-gd > /dev/null
 
  #install composer
 
@@ -57,21 +64,19 @@ RUN cat cron | crontab -
 
 #permissions apache
 RUN rm -f index.html \
-    && chown -R www-data. ./
-RUN chmod -R 777 /var/www/html
+    && chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html 
 
 #enable module apache
 
-RUN  a2enmod rewrite
+RUN a2enmod rewrite
+
+#config apache
+COPY 000-default.conf /etc/apache2/sites-enabled/
+#RUN htpasswd -bc mautic-whitelabeler/.htpasswd supera supera@123
 
 #start cron
 RUN service cron start 
 
 #ENTRYPOINT [ "service", "cron","restart"]
 CMD service cron restart  && apache2ctl -D FOREGROUND
-
-
-
-
-
-

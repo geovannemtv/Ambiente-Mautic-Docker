@@ -1,9 +1,10 @@
+*/1 * * * * chown -R  www-data:www-data /var/www/html/app/log
 8,23,38,52 * * * *        php /var/www/html/app/console mautic:segments:update > /var/log/cron.pipe 2>&1
        */5 * * * *        php /var/www/html/app/console mautic:import > /var/log/cron.pipe 2>&1
 5,20,35,50 * * * *        php /var/www/html/app/console mautic:campaigns:rebuild > /var/log/cron.pipe 2>&1
 2,17,32,47 * * * *        php /var/www/html/app/console mautic:campaigns:trigger > /var/log/cron.pipe 2>&1
 0,15,30,45 * * * *        php /var/www/html/app/console mautic:messages:send > /var/log/cron.pipe 2>&1
-*/5 * * * *        php /var/www/html/app/console mautic:emails:send > /var/log/cron.pipe 2>&1
+       */5 * * * *        php /var/www/html/app/console mautic:emails:send > /var/log/cron.pipe 2>&1
 0,15,30,45 * * * *        php /var/www/html/app/console mautic:email:fetch > /var/log/cron.pipe 2>&1
 0,15,30,45 * * * *        php /var/www/html/app/console mautic:social:monitoring > /var/log/cron.pipe 2>&1
 0,15,30,45 * * * *        php /var/www/html/app/console mautic:webhooks:process > /var/log/cron.pipe 2>&1
@@ -11,4 +12,4 @@
          * 1 * * *        php /var/www/html/app/console mautic:maintenance:cleanup --days-old=365 > /var/log/cron.pipe 2>&1
         0 4 15 * *        php /var/www/html/app/console mautic:iplookup:download > /var/log/cron.pipe 2>&1
        */5 * * * *        php /var/www/html/app/console mautic:reports:scheduler > /var/log/cron.pipe 2>&1
-        0 5 10 * *        php /var/www/html/app/console mautic:unusedip:delete > /var/log/cron.pipe 2>&1
+        0 5 10 * *        php /var/www/html/app/console mautic:unusedip:delete > /var/log/cron.pipe 2>&1i

@@ -1,7 +1,7 @@
 version: "3"
 services:
   app-mautic:
-    image: geovanne123/mautic:2.15.2
+    image: registry.supera.com.br/template-mautic:2.15.2
     #build: .
     container_name: app-mautic
     ports:
@@ -16,4 +16,3 @@ services:
       MYSQL_DATABASE: mautic
       MYSQL_ROOT_PASSWORD: mautic@123
     restart: unless-stopped
-
