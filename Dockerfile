@@ -1,5 +1,6 @@
 FROM debian:9
 
+MAINTAINER "geovanne queiroz"
 WORKDIR /var/www/html
 
 # Manually set up the apache environment variables
