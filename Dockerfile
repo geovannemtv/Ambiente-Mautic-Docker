@@ -74,7 +74,7 @@ RUN a2enmod rewrite
 
 #config apache
 COPY 000-default.conf /etc/apache2/sites-enabled/
-#RUN htpasswd -bc mautic-whitelabeler/.htpasswd supera supera@123
+
 
 #start cron
 RUN service cron start 
