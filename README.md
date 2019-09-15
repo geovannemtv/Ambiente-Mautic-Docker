@@ -1,5 +1,5 @@
-Amvbiente mautic utilizando docker. versão do mautic 2.15.2
+Ambiente mautic utilizando docker. versão do mautic 2.15.2
 
-Para inciar o amviente bastar rodar o seguinte comando:
+Para inciar o ambiente bastar rodar o seguinte comando:
 
-docker-compose.yaml
+docker-compose up -d
