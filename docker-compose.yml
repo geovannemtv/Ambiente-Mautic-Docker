@@ -1,8 +1,7 @@
 version: "3"
 services:
   app-mautic:
-    image: registry.supera.com.br/template-mautic:2.15.2
-    #build: .
+    build: .
     container_name: app-mautic
     ports:
     - "80:80"
