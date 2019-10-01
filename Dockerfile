@@ -1,14 +1,9 @@
 FROM debian:9
 
-MAINTAINER "geovanne queiroz"
-WORKDIR /var/www/html
 
-# Manually set up the apache environment variables
-ENV APACHE_RUN_USER www-data
-ENV APACHE_RUN_GROUP www-data
-ENV APACHE_LOG_DIR /var/log/apache2
-ENV APACHE_LOCK_DIR /var/lock/apache2
-ENV APACHE_PID_FILE /var/run/apache2.pid
+MAINTAINER "geovanne queiroz"
+
+WORKDIR /var/www/html
 
 # install pre-requisites
 RUN apt-get update > /dev/null \
@@ -47,8 +42,7 @@ RUN apt install --assume-yes \
         php7.0-pdo-mysql \
         php7.0-gd > /dev/null
 
- #install composer
-
+#install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=compose
 
 #install mautic
@@ -65,11 +59,13 @@ RUN cat cron | crontab -
 
 #permissions apache
 RUN rm -f index.html \
+    && php app/console cache:clear \
+    && php app/console cache:warmup \
     && chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html 
+    && chmod -R 755 /var/www/html \
+    && chmod -R g+rw /var/www/html 
 
 #enable module apache
-
 RUN a2enmod rewrite
 
 #config apache
@@ -79,5 +75,5 @@ COPY 000-default.conf /etc/apache2/sites-enabled/
 #start cron
 RUN service cron start 
 
-#ENTRYPOINT [ "service", "cron","restart"]
+
 CMD service cron restart  && apache2ctl -D FOREGROUND
